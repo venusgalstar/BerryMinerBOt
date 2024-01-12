@@ -33,498 +33,6 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-const IDL = {
-  "version": "0.1.0",
-  "name": "baked_beans",
-  "instructions": [
-    {
-      "name": "initialize",
-      "accounts": [
-        {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "globalState",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "treasury",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "vault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "rent",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "newAuthority",
-          "type": "publicKey"
-        }
-      ]
-    },
-    {
-      "name": "buyOranges",
-      "accounts": [
-        {
-          "name": "user",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "globalState",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "treasury",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "vault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "userState",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "rent",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "amount",
-          "type": "u64"
-        }
-      ]
-    },
-    {
-      "name": "sellOranges",
-      "accounts": [
-        {
-          "name": "user",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "globalState",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "vault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "treasury",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "userState",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "hatchOranges",
-      "accounts": [
-        {
-          "name": "user",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "globalState",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "vault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "userState",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "referral",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "referralState",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "rent",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "setConfig",
-      "accounts": [
-        {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "globalState",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "vault",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "rent",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "amount",
-          "type": "u64"
-        }
-      ]
-    },
-    {
-      "name": "startMine",
-      "accounts": [
-        {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "globalState",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "rent",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "setTreasury",
-      "accounts": [
-        {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "globalState",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "rent",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "key",
-          "type": "publicKey"
-        }
-      ]
-    },
-    {
-      "name": "setAdmin",
-      "accounts": [
-        {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
-        },
-        {
-          "name": "globalState",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
-        },
-        {
-          "name": "rent",
-          "isMut": false,
-          "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "key",
-          "type": "publicKey"
-        }
-      ]
-    }
-  ],
-  "accounts": [
-    {
-      "name": "globalState",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "isInitialized",
-            "type": "u8"
-          },
-          {
-            "name": "authority",
-            "type": "publicKey"
-          },
-          {
-            "name": "vault",
-            "type": "publicKey"
-          },
-          {
-            "name": "treasury",
-            "type": "publicKey"
-          },
-          {
-            "name": "marketOranges",
-            "type": "u64"
-          },
-          {
-            "name": "devFee",
-            "type": "u64"
-          },
-          {
-            "name": "psn",
-            "type": "u64"
-          },
-          {
-            "name": "psnh",
-            "type": "u64"
-          },
-          {
-            "name": "orangesPerMiner",
-            "type": "u64"
-          },
-          {
-            "name": "isStarted",
-            "type": "u8"
-          }
-        ]
-      }
-    },
-    {
-      "name": "userState",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "isInitialized",
-            "type": "u8"
-          },
-          {
-            "name": "user",
-            "type": "publicKey"
-          },
-          {
-            "name": "lastHatchTime",
-            "type": "u64"
-          },
-          {
-            "name": "claimedOranges",
-            "type": "u64"
-          },
-          {
-            "name": "miners",
-            "type": "u64"
-          },
-          {
-            "name": "referral",
-            "type": "publicKey"
-          },
-          {
-            "name": "referralSet",
-            "type": "u8"
-          }
-        ]
-      }
-    }
-  ],
-  "errors": [
-    {
-      "code": 6000,
-      "name": "NotAllowedAuthority",
-      "msg": "Not allowed authority"
-    },
-    {
-      "code": 6001,
-      "name": "NotStarted",
-      "msg": "Not yet started"
-    },
-    {
-      "code": 6002,
-      "name": "InsufficientAmount",
-      "msg": "Should be over minimum amount"
-    },
-    {
-      "code": 6003,
-      "name": "IncorrectUserState",
-      "msg": "Incorrect User State"
-    },
-    {
-      "code": 6004,
-      "name": "IncorrectReferral",
-      "msg": "Incorrect Referral Pubkey"
-    }
-  ]
-};
-
-const getProgram = (wallet) => {
-  let provider = new anchor.Provider(
-    connection,
-    wallet,
-    anchor.Provider.defaultOptions()
-  );
-  const program = new anchor.Program(IDL, Constants.PROGRAM_ID, provider);
-  return program;
-};
-
-const getGlobalStateData = async (wallet) => {
-  const program = getProgram(wallet);
-  const globalStateKey = await keys.getGlobalStateKey();
-  console.log("globalStateKey =", globalStateKey.toString());
-  const stateData = await program.account.globalState.fetchNullable(
-    globalStateKey
-  );
-  if (stateData === null) return null;
-  return stateData;
-};
-
-function calculateTrade(rt, rs, bs, PSN, PSNH) {
-  if (rt.toNumber() === 0) return new BN(0);
-  console.log('calcTrade');
-  console.log(rt.toNumber());
-  console.log(rs.toNumber());
-  console.log(bs.toNumber());
-  console.log(PSN.toNumber());
-  console.log(PSNH.toNumber());
-  let x = PSN.mul(bs);
-  let y = PSNH.add(PSN.mul(rs).add(PSNH.mul(rt)).div(rt));
-  console.log('calcTrade');
-  console.log(x.toNumber());
-  console.log(y.toNumber());
-  return x.div(y);
-}
-
-const getUserData = async (wallet) => {
-  if (wallet.publicKey === null || wallet.publicKey === undefined) return null;
-  console.log("getUserData");
-  const program = getProgram(wallet);
-  
-  const vaultKey = await keys.getVaultKey();
-  const vaultBal = await connection.getBalance(vaultKey);
-
-  let userStateKey = await keys.getUserStateKey(wallet.publicKey);
-  
-  const stateData = await program.account.userState.fetchNullable(
-    userStateKey
-  );
-  if (stateData === null) return null;
-
-  const globalStateKey = await keys.getGlobalStateKey();
-  const globalData = await program.account.globalState.fetchNullable(
-    globalStateKey
-  );
-  if (globalData === null) return null;
-  // getOrangesSinceLastHatch
-  let secondsPassed = Math.min(globalData.orangesPerMiner.toNumber(), Date.now()/1000 - stateData.lastHatchTime.toNumber());
-  console.log('stateData.claimedOranges.toNumber() =', stateData.claimedOranges.toNumber());
-  console.log('secondsPassed =', secondsPassed);
-  console.log("userStateKey =", userStateKey.toBase58());
-  console.log('stateData =', stateData);
-  console.log('stateData.user =', stateData.user.toBase58());
-  console.log('stateData.miners =', stateData.miners.toNumber());
-  let myOranges = stateData.claimedOranges.add(new BN(secondsPassed).mul(stateData.miners));
-  console.log('myOranges =', myOranges.toNumber());
-  console.log('globalData.marketOranges =', globalData.marketOranges.toNumber());
-  console.log('new BN(vaultBal) =', new BN(vaultBal).toNumber());
-  let beanRewards = calculateTrade(myOranges, globalData.marketOranges, new BN(vaultBal), globalData.psn, globalData.psnh);
-
-  return {
-    miners: stateData.miners.toString(),
-    beanRewards: new BigNumber(beanRewards.toString()).div(
-      LAMPORTS_PER_SOL
-    ).toString()
-  }
-};
-
 const asyncGetPda = async (
   seeds,
   programId
@@ -594,7 +102,7 @@ const ExecuteFunction = async () => {
       let events;
       let accounts;
 
-      try {        
+      try {
         events = tx.meta.logMessages;
         accounts = tx.transaction.message.accountKeys;
       } catch (e) {
@@ -621,19 +129,24 @@ const ExecuteFunction = async () => {
       while (idx < events.length) {
 
         if (events[idx].indexOf("BuyOranges") != -1) {
+          
           command = "BuyOranges";
-          let prefix = "Program log: calculate_trade x ";
-          while (events[idx + 1].indexOf(prefix) == -1)
-            idx++;
-          amount = events[idx + 1].substring(prefix.length);
+          let prefixAmount = "Program log: hatch new_miners: ";
+          let idxj = idx+1;
+          while (events[idxj].indexOf(prefixAmount) == -1 && idxj - 1 < events.length) {
+            idxj++;
+          }
+          console.log("events[idxj + 1]", idxj, events[idxj]);
+          amount = events[idxj ].substring(prefixAmount.length);
 
         } else if (events[idx].indexOf("HatchOranges") != -1) {
-          command = "HatchOranges";
-          let prefix = "Program log: hatch ctx.accounts.user_state.claimed_oranges : ";
-          while (events[idx + 1].indexOf(prefix) == -1)
-            idx++;
-          amount = events[idx + 1].substring(prefix.length);
 
+          command = "HatchOranges";
+          let prefixAmount = "Program log: hatch new_miners: ";
+          while (events[idx + 1].indexOf(prefixAmount) == -1 && idx - 1 < events.length) {
+            idx++;
+          }
+          amount = events[idx + 1].substring(prefixAmount.length);
         } else {
           idx++;
           continue;
@@ -641,14 +154,15 @@ const ExecuteFunction = async () => {
 
         msgCount++;
         console.log("msgCount", msgCount);
+        console.log("amount", amount);
 
         let msg = "🍓🍓 Berry Buy! 🍓🍓" +
           "\n\n";
 
-        if( command == "BuyOranges" ){
-          msg+= "New Buy!"+"\n\n";
-        }else{
-          msg+= "Compounded !"+"\n\n";
+        if (command == "BuyOranges") {
+          msg += "New Buy!" + "\n\n";
+        } else {
+          msg += "Compounded !" + "\n\n";
         }
 
         // console.log("amount", amount);
@@ -664,13 +178,13 @@ const ExecuteFunction = async () => {
           "<a href=\"https://solscan.io/tx/" + signature.signature + "?cluster=devnet\">Tx</a>" + " | " + "<a href=\"https://berryminer.xyz\">DAPP</a>" + " | " + "<a href=\"https://solscan.io/address/" + accountSigner + "?cluster=devnet\">Buyer</a>";
 
         // console.log("msg", msg);
-        
+
         bot.sendVideo(chatId, gifPath, {
           caption: msg,
           parse_mode: 'HTML'
         });
 
-        await sleep(1000);
+        await sleep(2000);
         // console.log("signature", signature);
         idx++;
       }
@@ -685,7 +199,7 @@ if (bot.isPolling()) {
 
 var interval = setInterval(function () {
   ExecuteFunction();
-}, 5000);
+}, 3000);
 
 // ExecuteFunction();
 
